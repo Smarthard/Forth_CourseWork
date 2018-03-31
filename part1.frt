@@ -13,13 +13,19 @@
 	1 >r 
 	2
 	do
-		dup r@ %
+		dup 4 <
 		if 
-		else 
-			r> r> 
-			r> drop
-			0 >r
-			>r >r
+			r> r@ >r
+			drop
+		else
+			dup r@ %
+			if 
+			else 
+				r> r> 
+				r> drop
+				0 >r
+				>r >r
+			then
 		then
 	loop
 	drop
@@ -56,3 +62,24 @@
 	strmv
 	drop ;
 	
+( value -- value )
+: radical
+	dup 1 swap
+	2
+	do
+		r@ is_prime @
+		if
+			over		
+			r@ %
+			dup
+			not
+			if
+				drop 
+				r@
+				*
+			else
+				drop
+			then			
+		then
+	loop
+	swap drop ;
