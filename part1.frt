@@ -15,8 +15,16 @@
 	do
 		dup 4 <
 		if 
-			r> r@ >r
-			drop
+			dup 1 >
+			if 
+				r> r@ >r
+				drop
+			else 
+				r> r> 
+				r> drop
+				0 >r
+				>r >r
+			then
 		else
 			dup r@ %
 			if 
@@ -64,22 +72,25 @@
 	
 ( value -- value )
 : radical
-	dup 1 swap
-	2
-	do
-		r@ is_prime @
-		if
-			over		
-			r@ %
-			dup
-			not
+	dup is_prime not
+	if
+		dup 1 swap
+		2
+		do
+			r@ is_prime @
 			if
-				drop 
-				r@
-				*
-			else
-				drop
-			then			
-		then
-	loop
-	swap drop ;
+				over		
+				r@ %
+				dup
+				not
+				if
+					drop 
+					r@
+					*
+				else
+					drop
+				then			
+			then
+		loop
+		swap drop 
+	then ;
